@@ -11,8 +11,6 @@ const apponintmentsRouter = Router();
 apponintmentsRouter.use(ensureAuthenticated);
 
 apponintmentsRouter.get('/', async (request, response) => {
-  console.log(request.user);
-
   const appointmentsRepository = getCustomRepository(AppointmentsRepository);
   const appointments = await appointmentsRepository.find();
 
@@ -20,22 +18,18 @@ apponintmentsRouter.get('/', async (request, response) => {
 });
 
 apponintmentsRouter.post('/', async (request, response) => {
-  try {
-    const { provider_id, date } = request.body;
+  const { provider_id, date } = request.body;
 
-    const parsedDate = parseISO(date);
+  const parsedDate = parseISO(date);
 
-    const createAppointment = new CreateAppointmentService();
+  const createAppointment = new CreateAppointmentService();
 
-    const appointment = await createAppointment.execute({
-      date: parsedDate,
-      provider_id,
-    });
+  const appointment = await createAppointment.execute({
+    date: parsedDate,
+    provider_id,
+  });
 
-    response.json(appointment);
-  } catch (error) {
-    response.status(error.statusCode).json({ message: error.message });
-  }
+  response.json(appointment);
 });
 
 export default apponintmentsRouter;
