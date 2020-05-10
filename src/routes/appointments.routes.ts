@@ -34,7 +34,7 @@ apponintmentsRouter.post('/', async (request, response) => {
 
     response.json(appointment);
   } catch (error) {
-    response.status(400).json({ message: error.message });
+    response.status(error.statusCode).json({ message: error.message });
   }
 });
 

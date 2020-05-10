@@ -42,7 +42,7 @@ usersRouter.patch(
 
       return response.json(user);
     } catch (error) {
-      return response.json({ message: error });
+      return response.status(error.statusCode).json({ message: error.message });
     }
   },
 );
